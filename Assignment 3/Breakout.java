@@ -58,7 +58,7 @@ public class Breakout extends GraphicsProgram {
 	private static final int NTURNS = 3;
 	
 	/** Total number of bricks */
-    private static final int TOTAL_BRICKS = NBRICK_ROWS * NBRICKS_PER_ROW;
+	private static final int TOTAL_BRICKS = NBRICK_ROWS * NBRICKS_PER_ROW;
 	
 	/** Method: run() - Runs the Breakout program. */
 	public void run() {
