@@ -220,11 +220,6 @@ private void addMessage(String messageText) {
 	add(msg, x, y);
 }
 
-private void restartGame() {
-	setupGame();
-	playGame();
-}
-
 // instance variables 
 private double vx, vy;
 private int gameCounter = 0;
