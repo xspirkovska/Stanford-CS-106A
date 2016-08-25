@@ -81,17 +81,23 @@ private void addBricks() {
 			brick = new GRect (x, y, BRICK_WIDTH, BRICK_HEIGHT);
 			brick.setFilled(true);
 
-			if (i < 2) { brick.setFillColor(Color.RED); }
-			if (i >= 2 && i < 4) { brick.setFillColor(Color.ORANGE); }
-			if (i >= 4 && i < 6) { brick.setFillColor(Color.YELLOW); }
-			if (i >= 6 && i < 8) { brick.setFillColor(Color.GREEN); }
-			if (i >= 8 && i < 10) { brick.setFillColor(Color.CYAN); }
+			if (i < 2) {
+            	brick.setFillColor(Color.RED);
+            } else if (i >= 2 && i < 4) {
+            	brick.setFillColor(Color.ORANGE);
+            } else if (i >= 4 && i < 6) {
+            	brick.setFillColor(Color.YELLOW);
+            } else if (i >= 6 && i < 8) {
+            	brick.setFillColor(Color.GREEN);
+            } else if (i >= 8 && i < 10) {
+            	brick.setFillColor(Color.CYAN);
+            }
 
 			add(brick); 
-			x+= BRICK_WIDTH + BRICK_SEP; 
+			x += BRICK_WIDTH + BRICK_SEP; 
 		}
 
-		y+= BRICK_HEIGHT+BRICK_SEP; 
+		y += BRICK_HEIGHT + BRICK_SEP; 
 		x = BRICK_SEP/2; 
 }
 
@@ -129,30 +135,32 @@ public void mouseMoved(MouseEvent e) {
 private void playGame() {
 
 	getBallVelocity();
-	
+
 	while (gameCounter < NTURNS) {
 		while (brickCounter < TOTAL_BRICKS) {
-			moveBall();
-			checkForCollisions();
+            moveBall();
+            checkForCollisions();
+            
+            if (ball.getY() == getHeight() - BALL_RADIUS*2) {
+                gameCounter++;
+    			if (brickCounter == TOTAL_BRICKS) {
+    	        	addMessage("Congrats - You won!");
+    			}
+        		removeAll();
+                break;
+            }                
+        }
 
-			if (ball.getY() == getHeight() - BALL_RADIUS*2) {
-				gameCounter ++;
-				removeAll();
-
-				if (gameCounter != NTURNS) {
-					addMessage("Next turn: Click to restart");
-					restartGame();
-				} else {
-					removeAll();
-					addMessage("Game Over!");
-					msg.setColor(Color.RED);
-				}
-				break;
-			}
+		if (gameCounter != NTURNS) {
+			 addMessage("Next turn: Click to restart");
+			 setupGame();
+			 playGame();
+		} else {
+			addMessage("Game Over!");
+			msg.setColor(Color.RED);
 		}
-
-		if (brickCounter == TOTAL_BRICKS) { addMessage("Congrats - You won!"); }
-	}   
+		
+    }  
 }
 
 private void getBallVelocity() {
@@ -165,8 +173,13 @@ private void getBallVelocity() {
 private void moveBall() {
 	ball.move(vx, vy);
 
-	if (ball.getX() + BALL_RADIUS * 2 >= getWidth() || ball.getX() <= 0) { vx = -vx; }
-	if (ball.getY() <= 0) { vy = -vy; }
+	if (ball.getX() + BALL_RADIUS * 2 >= getWidth() || ball.getX() <= 0) { 
+		vx = -vx; 
+	}
+
+	if (ball.getY() <= 0) { 
+		vy = -vy; 
+	}
 
 	pause (60);
 }
